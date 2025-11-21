@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MBTA Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mbta.css') }}">
+</head>
+<body>
+    <main class="hero">
+        <div class="search-card card">
+            <h1>Find the Nearest MBTA Stop</h1>
+            <p>Enter a place name or address in the Greater Boston area and we'll locate the closest station for you.</p>
 
-  <body>
-    <h1>Hi</h1>
-    <p>This is an amazing app to help you find the nearest MBTA station</p>
-  </body>
+            <form action="/nearest_mbta" method="POST" class="search-form" aria-label="Find nearest MBTA stop">
+                <div class="form-row">
+                    <div class="input">
+                        <label for="place" class="label" style="position:absolute;left:-9999px;">Place name or address</label>
+                        <input type="search" id="place" name="place_name" placeholder="e.g. Back Bay Station, Boston, MA" required>
+                    </div>
+                    <button type="submit" class="btn primary">Find Stop</button>
+                </div>
+            </form>
+
+            <div class="small-note">Tip: Add an address, neighborhood or landmark for best results.</div>
+        </div>
+    </main>
+</body>
 </html>

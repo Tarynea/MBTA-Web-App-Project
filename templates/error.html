@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mbta.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card" role="alert" aria-live="polite">
+            <h1 style="display:flex;align-items:center;gap:10px;margin-bottom:6px;color:#d9534f"> 
+                <img src="{{ url_for('static', filename='icons/error.svg') }}" alt="error" width="20" height="20" style="vertical-align:middle"> Oops!
+            </h1>
+
+            <div class="row" style="border-top:none;padding:6px 0 0 0">
+                <div>
+                    <div class="label">Message</div>
+                    <div class="value">{{ message }}</div>
+                </div>
+            </div>
+
+            <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+                <a class="btn" href="/">Home</a>
+                <a class="btn" href="javascript:history.back()" style="background:#6b7280">Go back</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
