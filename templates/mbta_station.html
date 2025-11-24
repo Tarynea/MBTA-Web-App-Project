@@ -2,58 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nearest MBTA Stop</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mbta.css') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Nearest MBTA Stop</h1>
+    <h1>Nearest MBTA Stop</h1>
 
-            <div class="row">
-                <div>
-                    <div class="label">Place searched</div>
-                    <div class="value">{{ place_name }}</div>
-                </div>
-            </div>
+    <p><strong>Place searched:</strong> {{ place_name }}</p>
+    <p><strong>Station name:</strong> {{ station_name }}</p>
+    <p><strong>Wheelchair accessibility:</strong> {{ wheelchair_info }}</p>
 
-            <div class="row">
-                <div>
-                    <div class="label">Station name</div>
-                    <div class="value"><img src="{{ url_for('static', filename='icons/train.svg') }}" alt="station" width="18" height="18" style="vertical-align:middle;margin-right:8px">{{ station_name }}</div>
-                </div>
-            </div>
+    {% if walking_minutes %}
+        <p>
+            <strong>Estimated walking time to this stop:</strong>
+            {{ walking_minutes }} minutes
+        </p>
+    {% endif %}
 
-            <div class="row">
-                <div>
-                    <div class="label">Wheelchair accessibility</div>
-                    <div class="value">
-                        {% set wc = (wheelchair_info|string).strip() %}
-                        {% if wc|lower in ['accessible','yes','true','1'] %}
-                            <span class="accessibility yes"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="accessible" width="16" height="16" style="vertical-align:middle;margin-right:6px">{{ wheelchair_info }}</span>
-                        {% elif wc|lower in ['not accessible','no','false','0'] %}
-                            <span class="accessibility no"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="not accessible" width="16" height="16" style="vertical-align:middle;margin-right:6px">{{ wheelchair_info }}</span>
-                        {% else %}
-                            <span class="accessibility"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="access" width="16" height="16" style="vertical-align:middle;margin-right:6px">{{ wheelchair_info }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+    {% if weather_description %}
+        <p>
+            <strong>Current weather near this location:</strong>
+            {{ weather_description }} ({{ weather_temp }} °F)
+        </p>
+    {% endif %}
 
-            {% if weather_description %}
-            <div class="row">
-                <div>
-                    <div class="label">Current weather near this location</div>
-                    <div class="value">
-                        <span class="weather"><img src="{{ url_for('static', filename='icons/weather.svg') }}" alt="weather" width="16" height="16" style="vertical-align:middle;margin-right:6px">{{ weather_description }} — {{ weather_temp }} °F</span>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+    {% if map_url %}
+        <h2>Map</h2>
+        <img src="{{ map_url }}" alt="Map showing the MBTA stop">
+    {% endif %}
 
-            <a class="btn" href="/">Search again</a>
-        </div>
-    </div>
+    {% if alerts and alerts|length > 0 %}
+        <h2>Service alerts for this stop</h2>
+        <ul>
+            {% for alert in alerts %}
+                <li>{{ alert }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p>
+        <a href="/">Search again</a>
+    </p>
 </body>
 </html>
