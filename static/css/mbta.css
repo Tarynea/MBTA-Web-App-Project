@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
 :root{--bg:#f5f7fb;--card:#ffffff;--accent:#0055a5;--muted:#6b7280;--success:#0b8457;--danger:#d9534f}
-body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#eef6ff 0%,var(--bg) 100%); color:#111; margin:0; padding:32px}
+body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#eef6ff 0%,var(--bg) 100%); color:#0f172a; margin:0; padding:32px}
 .container{max-width:760px;margin:24px auto;padding:20px}
 .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(17,24,39,0.08);padding:28px}
 h1{margin:0 0 8px;font-size:1.4rem;color:var(--accent)}
@@ -25,3 +27,27 @@ input[type="text"]:focus{outline:none;box-shadow:0 0 0 4px rgba(0,85,165,0.06);b
 .btn.primary{background:var(--accent);padding:12px 16px;border-radius:8px;color:#fff;border:none;cursor:pointer}
 .btn.secondary{background:#fff;padding:12px 14px;border-radius:8px;border:1px solid #e6edf6;color:var(--accent)}
 .small-note{color:var(--muted);font-size:0.9rem;margin-top:12px}
+
+/* Station view polished styles */
+.station-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2b8ed6);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.brand h2{margin:0;font-size:1.125rem}
+.station-view{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start}
+.station-map{min-height:260px;border-radius:10px;background:linear-gradient(180deg,#e9f2ff, #ffffff);box-shadow:inset 0 1px 0 rgba(255,255,255,0.6),0 6px 18px rgba(17,24,39,0.04);display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid #e9f6ff}
+.map-placeholder{width:100%;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.station-info{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 8px 24px rgba(17,24,39,0.04)}
+.station-title{display:flex;align-items:center;gap:12px;margin:0 0 8px 0}
+.station-title h3{margin:0;font-size:1.25rem}
+.meta-grid{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.meta-row{display:flex;align-items:center;gap:10px}
+.meta-row .label{color:var(--muted);font-size:0.85rem;width:140px}
+.meta-row .value{font-weight:700;color:#0b1220}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:rgba(0,85,165,0.06);color:var(--accent);font-weight:700}
+.badge.success{background:rgba(11,132,87,0.12);color:var(--success)}
+.badge.danger{background:rgba(217,83,79,0.08);color:var(--danger)}
+.actions{display:flex;gap:10px;margin-top:16px}
+.btn.ghost{background:#fff;border:1px solid #e6edf6;color:var(--accent)}
+
+@media (max-width:880px){.station-view{grid-template-columns:1fr 320px}}
+@media (max-width:720px){.station-view{grid-template-columns:1fr}.station-map{order:2}.station-info{order:1}}

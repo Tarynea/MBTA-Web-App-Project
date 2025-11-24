@@ -2,45 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nearest MBTA Stop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mbta.css') }}">
 </head>
 <body>
-    <h1>Nearest MBTA Stop</h1>
+    <div class="container">
+        <header class="station-header">
+            <div class="brand">
+                <div class="logo">MB</div>
+                <div>
+                    <h2>Nearest MBTA Stop</h2>
+                    <div class="small-note">Results for <strong>{{ place_name }}</strong></div>
+                </div>
+            </div>
+            <div>
+                <a class="btn ghost" href="/">New search</a>
+            </div>
+        </header>
 
-    <p><strong>Place searched:</strong> {{ place_name }}</p>
-    <p><strong>Station name:</strong> {{ station_name }}</p>
-    <p><strong>Wheelchair accessibility:</strong> {{ wheelchair_info }}</p>
+        <section class="station-view">
+            <div class="station-map card">
+                {% if map_url %}
+                    <img src="{{ map_url }}" alt="Map showing the MBTA stop" style="width:100%;height:100%;object-fit:cover;border-radius:10px">
+                {% else %}
+                    <div class="map-placeholder">
+                        <div style="text-align:center">
+                            <div style="font-size:14px;color:var(--muted)">Map preview</div>
+                            <div style="margin-top:8px;color:var(--muted)">Insert map here (Mapbox / Leaflet)</div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
 
-    {% if walking_minutes %}
-        <p>
-            <strong>Estimated walking time to this stop:</strong>
-            {{ walking_minutes }} minutes
-        </p>
-    {% endif %}
+            <aside class="station-info">
+                <div class="station-title">
+                    <img src="{{ url_for('static', filename='icons/train.svg') }}" alt="station" width="22" height="22">
+                    <h3>{{ station_name }}</h3>
+                </div>
 
-    {% if weather_description %}
-        <p>
-            <strong>Current weather near this location:</strong>
-            {{ weather_description }} ({{ weather_temp }} °F)
-        </p>
-    {% endif %}
+                <div class="meta-grid">
+                    <div class="meta-row">
+                        <div class="label">Searched place</div>
+                        <div class="value">{{ place_name }}</div>
+                    </div>
 
-    {% if map_url %}
-        <h2>Map</h2>
-        <img src="{{ map_url }}" alt="Map showing the MBTA stop">
-    {% endif %}
+                    <div class="meta-row">
+                        <div class="label">Wheelchair</div>
+                        <div class="value">
+                            {% set wc = (wheelchair_info|string).strip() %}
+                            {% if wc|lower in ['accessible','yes','true','1'] %}
+                                <span class="badge success"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="accessible" width="14" height="14"> {{ wheelchair_info }}</span>
+                            {% elif wc|lower in ['not accessible','no','false','0'] %}
+                                <span class="badge danger"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="not accessible" width="14" height="14"> {{ wheelchair_info }}</span>
+                            {% else %}
+                                <span class="badge"><img src="{{ url_for('static', filename='icons/wheelchair.svg') }}" alt="access" width="14" height="14"> {{ wheelchair_info }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
 
-    {% if alerts and alerts|length > 0 %}
-        <h2>Service alerts for this stop</h2>
-        <ul>
-            {% for alert in alerts %}
-                <li>{{ alert }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                    {% if walking_minutes %}
+                    <div class="meta-row">
+                        <div class="label">Walk time</div>
+                        <div class="value">{{ walking_minutes }} minutes</div>
+                    </div>
+                    {% endif %}
 
-    <p>
-        <a href="/">Search again</a>
-    </p>
+                    {% if weather_description %}
+                    <div class="meta-row">
+                        <div class="label">Weather</div>
+                        <div class="value"><span class="badge"><img src="{{ url_for('static', filename='icons/weather.svg') }}" alt="weather" width="14" height="14"> {{ weather_description }} — {{ weather_temp }} °F</span></div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="actions">
+                    <a class="btn primary" href="https://www.google.com/maps/search/{{ station_name }}" target="_blank" rel="noopener">Open in Google Maps</a>
+                    <a class="btn ghost" href="/">Search again</a>
+                </div>
+
+                {% if alerts and alerts|length > 0 %}
+                <div style="margin-top:18px">
+                    <h4 style="margin:0 0 8px 0">Service alerts</h4>
+                    <ul style="margin:0;padding-left:18px;color:var(--muted)">
+                        {% for alert in alerts %}
+                            <li>{{ alert }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </aside>
+        </section>
+    </div>
 </body>
 </html>
