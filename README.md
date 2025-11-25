@@ -1,50 +1,87 @@
 Project Overview
 
-This project is a Flask-based web application that helps users find the nearest MBTA station to a given place in the Greater Boston area. When the user enters a place name or address, the app uses Mapbox’s geocoding API to convert the location into latitude and longitude. Those coordinates are then used to call the MBTA API to determine the closest transit stop and whether it is wheelchair accessible. The app displays the results through a clean interface built with Flask templates.
+This project is a Flask-based web application that helps users locate the nearest MBTA station to any entered place or address in the Greater Boston area. After the user submits a location, the app:
 
-As our “wow” feature, we added real-time weather information. Using the OpenWeather API, the app retrieves the current weather near the user’s searched location. This gives users an additional layer of helpful context beyond the nearest station.
+1. Converts the place name into coordinates using Mapbox
+2. Finds the nearest MBTA station using the MBTA v3 API
+3. Retrieves the station’s wheelchair accessibility status
+4. Displays additional helpful “wow” features
+5. Our final app includes four major wow features:
+6. Real-time weather for the searched location
+7. Estimated walking time to the nearest MBTA stop
+8. A dynamic map preview showing the stop location
+9. Real-time service alerts affecting that specific stop
 
-Reflection
-Development Process
+This creates a user-friendly tool that combines multiple live data sources into one simple interface.
 
-We split our work intentionally and worked on the project evenly. One of us focused on the backend logic: building mbta_helper.py, structuring the API requests, cleaning up JSON responses, and making sure the coordinates and station information were accurate. The other built the Flask framework, connected the routes, designed the templates, and made sure the frontend communicated smoothly with the backend.
+How The App Works-
 
-Most of our debugging time happened during the API stage, especially when Mapbox returned different JSON shapes or MBTA returned no stations for certain queries. Testing each helper function in isolation helped us move from confusion to clarity pretty quickly. Once the backend was stable, integrating everything into Flask went smoothly. Adding the weather feature felt natural because our helper functions were already organized, and we just extended the structure we had built.
+User Experience Flow:
+User enters a place → submits form
+App geocodes the address
+App finds the closest MBTA stop
 
-If we were to do this again, we would set up template placeholders earlier and test the error cases sooner. But overall, our step-by-step approach made the project feel manageable and structured.
+App fetches:
+Weather
+Walking estimate
+Station accessibility
+Map image
+Service alerts
+Results are displayed on a clean, readable results page
+If anything fails (missing location, bad API response, etc.), the user sees a friendly error page
 
-Teamwork & Work Division
+APIs Used:
+Mapbox Searchbox API – convert location → coordinates
+Mapbox Static Maps API – map preview
+MBTA API – station data + alerts
+OpenWeather API – live weather
 
-We worked together and split the work 50–50.
+Wow Features-
+1. Real-Time Weather: Shows temperature and weather conditions at the user’s searched location.
+2. Estimated Walking Time:Uses geographic distance + average walking speed to make the result more useful.
+3. Map Preview: Displays a static Mapbox map with the MBTA stop marked clearly.
+4. MBTA Service Alerts:Shows relevant warnings or updates for the stop so the user can plan ahead.
 
-Backend 
+Team Contributions-
 
-Implemented API calls for Mapbox and MBTA
+We collaborated throughout the project, but the division of work reflects what each of us focused on most.
 
-Wrote and tested helper functions (get_json, get_lat_lng, get_nearest_station)
+Tarynea’s Contributions-
+-Built and refined all backend logic in mbta_helper.py
+-Integrated all wow features (weather, walking time, map, alerts)
+-Handled API troubleshooting, testing, and debugging
+-Structured the backend–frontend connection
+-Designed the deployment setup and configured PythonAnywhere
+-Ensured data validation, error handling, and UX consistency
+-Wrote documentation, organized the GitHub repo, and finalized the project
 
-Added weather logic in mbta_helper.py
+Tamanna’s Contributions-
+-Set up the Flask app structure (app.py routing & framework)
+-Created and refined HTML templates: index.html, error.html, and parts of mbta_station.html
+-Helped test the overall flow and verify API outputs
+-Contributed to visual layout choices and content formatting
+-Assisted with README drafting and presentation-ready polishing
 
-Debugged JSON parsing and URL formatting
+Joint Efforts-
+-Brainstorming project direction and deciding on WOW features
+-Debugging API issues together
+-Pair-testing final user flows
+-Reviewing and improving code clarity
 
-Flask + Frontend 
+Use of AI Tools-
+AI assisted our process as a supportive tool, not a builder of the project.
+We used AI for:
+Suggesting potential WOW features and helping us select the strongest ones
+Explaining API documentation and error messages
+Helping structure the backend logic and understand proper routing patterns
+Providing general guidance on how to deploy a Flask app on PythonAnywhere
+Offering debugging suggestions when stuck
+All code, decisions, integration, and testing were completed by us.
 
-Built Flask routes and connected the backend to the frontend
-
-Created the HTML templates (index.html, mbta_station.html, error.html)
-
-Handled form submission, POST requests, and rendering data
-
-Integrated the weather data into the results page
-
-We collaborated whenever something broke or didn’t look right. Even though we divided the tasks, we reviewed everything together and made sure both sides understood the full flow of the project.
-
-Learning & Use of AI Tools
-
-We used AI as a support tool while still making sure the core logic and decisions were our own. AI helped us clarify API documentation, understand JSON structures, and troubleshoot specific errors we encountered with URL parameters or unusual API responses. It also helped us think through implementation approaches when we weren’t sure how to connect two parts of the app.
-
-But we wrote and tested the real logic ourselves. We examined every API output manually, validated the structure of our helper functions, and confirmed the Flask flow through our own testing. AI never wrote large sections of the project for us; it mainly acted as a debugging and explanation resource.
-
-ALL SCREENSHOTS OF ERRORS AND IMPORTANT STEPS HAVE BEEN ADDED TO SCREENSHOTS FOLDER IN THIS REPOSITORY 
-
-
+Deployment Notes (PythonAnywhere)-
+The app is deployed through PythonAnywhere.
+However, free-tier PythonAnywhere accounts block external API calls, which means:
+The homepage loads
+The form works
+Templates render correctly
+But APIs (Mapbox, MBTA, OpenWeather) will not return data due to outbound internet restrictions.Locally, the full app works as intended.
