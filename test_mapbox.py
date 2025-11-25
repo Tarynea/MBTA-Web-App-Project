@@ -14,7 +14,7 @@ if MAPBOX_TOKEN is None:
     raise RuntimeError("MAPBOX_TOKEN is not set. Check your .env file.")
 
 def test_mapbox(query: str = "Babson College"):
-    # Replace spaces with %20 for URL encoding (simple way)
+    # Replace spaces with %20 for URL encoding 
     encoded_query = query.replace(" ", "%20")
 
     url = f"{MAPBOX_BASE_URL}?q={encoded_query}&access_token={MAPBOX_TOKEN}"
@@ -29,7 +29,7 @@ def test_mapbox(query: str = "Babson College"):
     # Pretty-print the response structure
     pprint.pprint(response_data)
 
-    # Try printing the first result's address (if available)
+
     try:
         address = response_data["features"][0]["properties"]["address"]
         print("\nFirst result address:", address)
